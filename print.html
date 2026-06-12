@@ -379,6 +379,10 @@ Cut v0.1.0 tag; release publishes all six matrix binaries (needed <code>permissi
 <li>no-phase-skill issue #5 (enforcement was forward-looking only; adopting/upgrading repos had no way to audit existing content against current rules) resolved in PR #6 (squash d3c280c): new <code>--log</code> mode runs every commit message from <code>git log -z</code> through the engine, sha-labelled output; README/SKILL.md document the one-shot adoption/upgrade audit (<code>--all</code> + <code>--log</code>). Baseline file skipped — stateless tool.</li>
 <li>Per operator direction, "history is immutable" is a default, not a rule: docs guide an opt-in cleanup — archive the original history on a pushed branch, amend/rebase/filter-repo the tells, force-push with lease, and attach a <code>Superseded-by: &lt;new-sha&gt;</code> trailer to each replaced commit via <code>git notes</code> (push refs/notes/commits) so the archive stays coherent without rewriting it.</li>
 </ul>
+<h3 id="2026-06-12--retroactive-audit-smoke-test-on-the-host-repo"><a class="header" href="#2026-06-12--retroactive-audit-smoke-test-on-the-host-repo">2026-06-12 — Retroactive audit smoke test on the host repo</a></h3>
+<ul>
+<li>Both histories (host and submodule) lint clean with --log. The --all baseline is ~56 expected flags: the linter's own docs/tests quoting tells, PLAN.md's mandated ordinal dictionary, MEMORY.md's quoted slop subject, and one false positive ("Pass: ≤ 500 lines" in SKILL_AUTHORING.md, a gate verdict not a phase). Do not "fix" these. The only real finding — a stale "PHASEx.md (see section 5)" cross-reference in CLAUDE.md and its karpathy-guidelines copy — was cleaned in 6057776.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="claudemd"><a class="header" href="#claudemd">CLAUDE.md</a></h1>
 <p>Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.</p>
 <p>Tradeoff: These guidelines bias toward caution over speed. For trivial tasks, use judgment.</p>
