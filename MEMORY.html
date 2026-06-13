@@ -275,6 +275,11 @@
 <li>New exit-code contract: 0 clean, 1 confirmed tell (blocks), 2 usage/git error, 3 warnings-only (advisory). Match gained a Severity; text output marks warnings <code>warning:</code>, JSON gained a <code>severity</code> field. Host pointer bumped (a0673d2).</li>
 <li>CI gotcha: <code>prop_assert!(cond)</code> with a single arg and an inline <code>format!("{}.{}", ..)</code> fails to compile — the macro reinterprets the <code>{}</code> braces. Bind the formatted string to a let first and pass it as an explicit <code>prop_assert!(cond, "x: {}", s)</code> message. The <code>build</code> jobs compile only lib+bin and stayed green; only the <code>test</code> job (which compiles tests) caught it.</li>
 </ul>
+<h3 id="2026-06-13--local-rust-toolchain-works-now-corrects-2026-06-10-entries"><a class="header" href="#2026-06-13--local-rust-toolchain-works-now-corrects-2026-06-10-entries">2026-06-13 — Local Rust toolchain works now (corrects 2026-06-10 entries)</a></h3>
+<ul>
+<li>The local toolchain is no longer broken: <code>cargo</code>/<code>rustc</code> are rustup-managed stable 1.95.0 (GNU host), and <code>cargo build --release</code>, <code>cargo test</code> (30 pass), <code>./test-integration.sh</code> (60/60), and <code>./lint-skill.sh</code> (G1-G8 all pass) all run clean locally. This supersedes the 2026-06-10 notes that cargo was <code>0.0.1-pre-nightly</code> and could not build (verify via CI), and that lint-skill.sh G1 failed for lack of PyYAML — python3 now has PyYAML 5.4.1.</li>
+<li>Going forward, build and test locally before pushing; CI is confirmation, not the only build path. <code>cargo</code>/<code>rustc</code>/<code>clippy</code> under ~/.cargo/bin are symlinks to the <code>rustup</code> shim, which resolves the active stable toolchain.</li>
+</ul>
 
                     </main>
 
