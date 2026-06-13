@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="PLAN.html"><strong aria-hidden="true">1.</strong> PLAN.md</a></li><li class="chapter-item expanded "><a href="BOOTSTRAP.html"><strong aria-hidden="true">2.</strong> BOOTSTRAP.md</a></li><li class="chapter-item expanded "><a href="CI-PIPELINE.html"><strong aria-hidden="true">3.</strong> CI-PIPELINE.md</a></li><li class="chapter-item expanded "><a href="FORMAL-SPEC.html"><strong aria-hidden="true">4.</strong> FORMAL-SPEC.md</a></li><li class="chapter-item expanded "><a href="SKILL-HARDENING.html"><strong aria-hidden="true">5.</strong> SKILL-HARDENING.md</a></li><li class="chapter-item expanded "><a href="MEMORY.html"><strong aria-hidden="true">6.</strong> MEMORY.md</a></li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">7.</strong> CLAUDE.md</a></li><li class="chapter-item expanded "><a href="SKILL_AUTHORING.html"><strong aria-hidden="true">8.</strong> SKILL_AUTHORING.md</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="PLAN.html"><strong aria-hidden="true">1.</strong> PLAN.md</a></li><li class="chapter-item expanded "><a href="BOOTSTRAP.html"><strong aria-hidden="true">2.</strong> BOOTSTRAP.md</a></li><li class="chapter-item expanded "><a href="CI-PIPELINE.html"><strong aria-hidden="true">3.</strong> CI-PIPELINE.md</a></li><li class="chapter-item expanded "><a href="FORMAL-SPEC.html"><strong aria-hidden="true">4.</strong> FORMAL-SPEC.md</a></li><li class="chapter-item expanded "><a href="SKILL-HARDENING.html"><strong aria-hidden="true">5.</strong> SKILL-HARDENING.md</a></li><li class="chapter-item expanded "><a href="MEMORY.html"><strong aria-hidden="true">6.</strong> MEMORY.md</a></li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">7.</strong> CLAUDE.md</a></li><li class="chapter-item expanded "><a href="SKILL_AUTHORING.html"><strong aria-hidden="true">8.</strong> SKILL_AUTHORING.md</a></li><li class="chapter-item expanded "><a href="decisions/0000-use-markdown-decision-records.html"><strong aria-hidden="true">9.</strong> Decisions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="decisions/0001-tool-outputs-are-project-owned.html"><strong aria-hidden="true">9.1.</strong> 0001 — Tool outputs are project-owned</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -689,6 +689,92 @@ https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices</li
 <li>Agent Skills format reference (portable subset):
 https://www.agensi.io/learn/skill-md-format-reference</li>
 <li>Open standard overview: agentskills.io</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="use-markdown-decision-records-madr"><a class="header" href="#use-markdown-decision-records-madr">Use Markdown decision records (MADR)</a></h1>
+<ul>
+<li>Status: accepted</li>
+<li>Date: 2026-06-14</li>
+</ul>
+<h2 id="context-and-problem-statement"><a class="header" href="#context-and-problem-statement">Context and Problem Statement</a></h2>
+<p>Architectural decisions for the agentic-host methodology need a durable, citable
+home — separate from MEMORY.md (lessons learned, backward-looking) and PLAN.md
+(the milestone index). Without one, the reasoning behind a choice evaporates and
+gets re-litigated.</p>
+<h2 id="decision"><a class="header" href="#decision">Decision</a></h2>
+<p>Adopt MADR (Markdown Architectural Decision Records) for this log:</p>
+<ul>
+<li>Files are named <code>NNNN-topic-slug.md</code>, zero-padded to width four, numbered
+monotonically from this <code>0000</code> bootstrap, lowercase-and-dashes, no <code>ADR-</code>
+prefix.</li>
+<li>A record's number is its identity, not a sort key; this log is the ordering
+authority.</li>
+<li>Numbers are assigned at merge, so two branches do not collide on the same
+<code>NNNN</code>.</li>
+<li>Disambiguation by home: a bare number at the plan root names a milestone; a
+numbered file under <code>decisions/</code> names a decision.</li>
+</ul>
+<h2 id="consequences"><a class="header" href="#consequences">Consequences</a></h2>
+<ul>
+<li>Good: decisions carry structured status and supersession and a stable, citable
+identity; this log documents its own format as record zero.</li>
+<li>Neutral: this is one of two numbered registers (milestones and decisions),
+told apart by home — kept explicit to avoid confusion.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tool-outputs-are-project-owned-not-under-allium-or-specula-licenses"><a class="header" href="#tool-outputs-are-project-owned-not-under-allium-or-specula-licenses">Tool outputs are project-owned, not under allium or Specula licenses</a></h1>
+<ul>
+<li>Status: accepted</li>
+<li>Date: 2026-06-14</li>
+</ul>
+<h2 id="context-and-problem-statement-1"><a class="header" href="#context-and-problem-statement-1">Context and Problem Statement</a></h2>
+<p>The agentic-host methodology composes three referenced tools as submodules:
+no-phase (Unlicense, ours), allium (MIT, JUXT Ltd), and Specula (Apache-2.0,
+specula-org). Running them produces artifacts inside our project — allium's
+<code>propagate</code> emits obligations; Specula emits a modeling brief, <code>base.tla</code> /
+<code>MC.tla</code> specs, traces, and bug reports into <code>.specula-output/</code>. We need a
+recorded position on whether those generated artifacts carry the tools'
+licenses, so our project content stays license-clean and we avoid accidental
+contamination.</p>
+<h2 id="considered-options"><a class="header" href="#considered-options">Considered Options</a></h2>
+<ol>
+<li>Treat generated artifacts as project-owned, outside the tools' license scope.</li>
+<li>Treat them as derivative works of the tools (carrying MIT / Apache-2.0).</li>
+<li>Never generate into our tree (run the tools out-of-tree only).</li>
+</ol>
+<h2 id="decision-outcome"><a class="header" href="#decision-outcome">Decision Outcome</a></h2>
+<p>Chosen option 1: <strong>artifacts the tools generate from our own input are our
+project's work product, outside allium's and Specula's license scope</strong> — the
+same way a compiled binary is not a derivative of the compiler that produced it.</p>
+<h3 id="basis-verified-against-the-source-repos"><a class="header" href="#basis-verified-against-the-source-repos">Basis (verified against the source repos)</a></h3>
+<ul>
+<li>Both licenses govern only "the Work" / "the Software" — the tools' own files —
+not artifacts produced by running them. allium ships standard MIT (© JUXT Ltd)
+with no output clause. Specula ships standard Apache-2.0 whose "Derivative
+Works" definition refers to works based on Specula's code, not specs that model
+our system. Specula's DCO governs inbound contributions only.</li>
+<li>Both tools frame outputs as the user's: allium "generates tests from the
+formal behaviours of your system"; Specula writes outputs to
+<code>.specula-output/</code> under the project root.</li>
+<li>Both authors chose permissive licenses; a verification tool that claimed the
+specs you write about your own system would be self-defeating. So this reading
+is consistent with — not contrary to — the authors' intent.</li>
+</ul>
+<h3 id="carve-out"><a class="header" href="#carve-out">Carve-out</a></h3>
+<p>Verbatim boilerplate a tool injects — a Specula trace-module or harness
+skeleton, an allium obligation template — remains part of that tool's Work and
+keeps its license. We reference such boilerplate (for example <code>EXTENDS</code> or an
+include from the submodule), never vendor it into our tree.</p>
+<h2 id="consequences-1"><a class="header" href="#consequences-1">Consequences</a></h2>
+<ul>
+<li>Good: generated obligations, specs, and bug reports under a milestone's
+<code>obligations/</code> are project-owned and Unlicense-clean — no attribution
+obligation downstream.</li>
+<li>Good: the tools stay in their submodules under their own licenses; the
+separation is clean by construction.</li>
+<li>Risk: the cleanliness depends on referencing tool boilerplate rather than
+copying it; a generated artifact that embeds tool source verbatim carries that
+fragment's license.</li>
+<li>Note: this is practical reasoning, not legal advice; revisit before any
+commercially load-bearing use.</li>
 </ul>
 
                     </main>
