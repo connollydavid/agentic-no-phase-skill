@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="PLAN.html"><strong aria-hidden="true">1.</strong> PLAN.md</a></li><li class="chapter-item expanded "><a href="BOOTSTRAP.html"><strong aria-hidden="true">2.</strong> BOOTSTRAP.md</a></li><li class="chapter-item expanded "><a href="CI-PIPELINE.html"><strong aria-hidden="true">3.</strong> CI-PIPELINE.md</a></li><li class="chapter-item expanded "><a href="FORMAL-SPEC.html"><strong aria-hidden="true">4.</strong> FORMAL-SPEC.md</a></li><li class="chapter-item expanded "><a href="SKILL-HARDENING.html"><strong aria-hidden="true">5.</strong> SKILL-HARDENING.md</a></li><li class="chapter-item expanded "><a href="MEMORY.html"><strong aria-hidden="true">6.</strong> MEMORY.md</a></li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">7.</strong> CLAUDE.md</a></li><li class="chapter-item expanded "><a href="SKILL_AUTHORING.html"><strong aria-hidden="true">8.</strong> SKILL_AUTHORING.md</a></li><li class="chapter-item expanded "><a href="decisions/0000-use-markdown-decision-records.html"><strong aria-hidden="true">9.</strong> Decisions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="decisions/0001-tool-outputs-are-project-owned.html"><strong aria-hidden="true">9.1.</strong> 0001 — Tool outputs are project-owned</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="PLAN.html"><strong aria-hidden="true">1.</strong> PLAN.md</a></li><li class="chapter-item expanded "><a href="BOOTSTRAP.html"><strong aria-hidden="true">2.</strong> BOOTSTRAP.md</a></li><li class="chapter-item expanded "><a href="CI-PIPELINE.html"><strong aria-hidden="true">3.</strong> CI-PIPELINE.md</a></li><li class="chapter-item expanded "><a href="FORMAL-SPEC.html"><strong aria-hidden="true">4.</strong> FORMAL-SPEC.md</a></li><li class="chapter-item expanded "><a href="SKILL-HARDENING.html"><strong aria-hidden="true">5.</strong> SKILL-HARDENING.md</a></li><li class="chapter-item expanded "><a href="MEMORY.html"><strong aria-hidden="true">6.</strong> MEMORY.md</a></li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">7.</strong> CLAUDE.md</a></li><li class="chapter-item expanded "><a href="SKILL_AUTHORING.html"><strong aria-hidden="true">8.</strong> SKILL_AUTHORING.md</a></li><li class="chapter-item expanded "><a href="decisions/0000-use-markdown-decision-records.html"><strong aria-hidden="true">9.</strong> Decisions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="decisions/0001-tool-outputs-are-project-owned.html"><strong aria-hidden="true">9.1.</strong> 0001 — Tool outputs are project-owned</a></li><li class="chapter-item expanded "><a href="decisions/0002-verification-lanes-by-property-type.html"><strong aria-hidden="true">9.2.</strong> 0002 — Verification lanes by property type</a></li><li class="chapter-item expanded "><a href="decisions/0003-compose-tools-as-referenced-submodules.html"><strong aria-hidden="true">9.3.</strong> 0003 — Compose tools as referenced submodules</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -775,6 +775,96 @@ copying it; a generated artifact that embeds tool source verbatim carries that
 fragment's license.</li>
 <li>Note: this is practical reasoning, not legal advice; revisit before any
 commercially load-bearing use.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="split-verification-into-lanes-by-property-type"><a class="header" href="#split-verification-into-lanes-by-property-type">Split verification into lanes by property type</a></h1>
+<ul>
+<li>Status: accepted</li>
+<li>Date: 2026-06-14</li>
+</ul>
+<h2 id="context-and-problem-statement-2"><a class="header" href="#context-and-problem-statement-2">Context and Problem Statement</a></h2>
+<p>Correctness has distinct property classes, and no single tool covers them all
+well. Functional and data invariants suit property-based testing; temporal,
+ordering, and concurrency invariants need full state-space exploration; and
+neither catches naming or process slop. We need a clear division so each concern
+is routed to the tool that actually covers it.</p>
+<h2 id="considered-options-1"><a class="header" href="#considered-options-1">Considered Options</a></h2>
+<ol>
+<li>One tool for everything (forces a single tool to cover properties it cannot).</li>
+<li>Lanes by property type — route each concern to the tool suited to it.</li>
+</ol>
+<h2 id="decision-outcome-1"><a class="header" href="#decision-outcome-1">Decision Outcome</a></h2>
+<p>Chosen option 2: <strong>three lanes, one per property class.</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Lane</th><th>Property class</th><th>Tool</th><th>License</th></tr></thead><tbody>
+<tr><td>Hygiene</td><td>naming and process slop (agentic tells)</td><td>no-phase</td><td>Unlicense</td></tr>
+<tr><td>Requirements + property-based testing</td><td>functional and data invariants ("for all inputs")</td><td>allium</td><td>MIT</td></tr>
+<tr><td>Timing + concurrency</td><td>temporal, ordering, interleaving invariants ("for all interleavings"), via model checking</td><td>Specula / TLA+</td><td>Apache-2.0</td></tr>
+</tbody></table>
+</div>
+<p>TLA+ is reserved strictly for its home ground — timing and concurrency. It is
+not a general requirements tool; that is allium's lane.</p>
+<h3 id="escalation-bridge"><a class="header" href="#escalation-bridge">Escalation bridge</a></h3>
+<p>When an allium property depends on interleaving or timing that property-based
+testing cannot adequately explore, it escalates from the property-based lane to
+the timing-and-concurrency lane. allium identifies such a property; Specula
+proves the temporal ones.</p>
+<h2 id="consequences-2"><a class="header" href="#consequences-2">Consequences</a></h2>
+<ul>
+<li>Good: every concern has a clear owner; the lanes are complementary, not
+overlapping.</li>
+<li>Good: a milestone may legitimately carry obligations in more than one lane.</li>
+<li>Neutral: contributors must learn which lane a property belongs to; the
+escalation bridge is the rule that resolves the boundary cases.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="compose-verification-tools-as-referenced-submodules"><a class="header" href="#compose-verification-tools-as-referenced-submodules">Compose verification tools as referenced submodules</a></h1>
+<ul>
+<li>Status: accepted</li>
+<li>Date: 2026-06-14</li>
+</ul>
+<h2 id="context-and-problem-statement-3"><a class="header" href="#context-and-problem-statement-3">Context and Problem Statement</a></h2>
+<p>The three lanes (see decision 0002) are owned by tools under three different
+licenses: no-phase (Unlicense, ours), allium (MIT), and Specula (Apache-2.0).
+They must fit our milestone (decision-record) lifecycle and obligations model
+without contaminating our license posture, forcing us to maintain a fork, or
+turning a tool's internal workflow into a competing project axis.</p>
+<h2 id="considered-options-2"><a class="header" href="#considered-options-2">Considered Options</a></h2>
+<ol>
+<li>Vendor each tool's files into our tree and edit them to fit.</li>
+<li>Reference each tool as a submodule and steer it from our own layer.</li>
+</ol>
+<h2 id="decision-outcome-2"><a class="header" href="#decision-outcome-2">Decision Outcome</a></h2>
+<p>Chosen option 2: <strong>each tool is a referenced submodule; we orchestrate, never
+edit.</strong></p>
+<ul>
+<li><strong>Reference, never vendor.</strong> Each tool is a git submodule; our methodology
+(CLAUDE.md) refers to its skills. We never copy or edit its files — behaviour
+is steered by instruction plus thin wrappers in our own tree. This keeps us
+clean of Apache-2.0 obligations and keeps submodule updates trivial.</li>
+<li><strong>Obligations are tagged by lane and co-located with tests.</strong> An obligation is
+<code>pbt</code> (allium) or <code>tla</code> (Specula); both live in the milestone's <code>obligations/</code>
+area. A tool's generated artifacts (allium's obligations, Specula's modeling
+brief, specs, traces, confirmed bugs) are the discharge evidence, and are
+project-owned per decision 0001.</li>
+<li><strong>A tool's workflow discharges, it does not milestone.</strong> A tool's internal
+pipeline runs inside one milestone to discharge that milestone's obligations;
+it is not a parallel milestone axis. Specula's steps are referred to by name
+(Code Analysis, Spec Generation, and so on), never as ordinal phases — keeping
+our own no-phase convention.</li>
+<li><strong>Lane choice is a decision.</strong> Choosing a lane for a concern, or classifying a
+Specula target category, is itself an architectural decision and gets its own
+record.</li>
+<li><strong>Boilerplate is referenced, not vendored.</strong> Verbatim tool boilerplate (a
+Specula trace-module, an allium template) is pulled in by reference, never
+copied — the carve-out from decision 0001.</li>
+</ul>
+<h2 id="consequences-3"><a class="header" href="#consequences-3">Consequences</a></h2>
+<ul>
+<li>Good: clean license separation by construction; our content stays Unlicense;
+submodule bumps are mechanical.</li>
+<li>Good: one numbered milestone register, undisturbed by the tools' internal
+step naming.</li>
+<li>Risk: correctness depends on the reference-not-vendor and instruct-not-patch
+discipline; patching a submodule is a designed-around failure mode, not a
+routine tool.</li>
 </ul>
 
                     </main>
