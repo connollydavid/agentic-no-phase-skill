@@ -389,6 +389,10 @@ Cut v0.1.0 tag; release publishes all six matrix binaries (needed <code>permissi
 <li>Adoption audit rerun clean: history exit 0; --all flag count rose ~56→75 solely because the walker follows the new symlink and scans the submodule twice. Minor --all caveat: walkdir_simple follows symlinks (duplicate scans; cyclic symlinks would loop).</li>
 <li>Recurring constraint: the pre-commit hook flags any commit staging MEMORY.md or PLAN.md, because both intentionally quote tells (baseline fixtures) and MEMORY is append-only so the lines cannot be reworded. Commit those files with <code>git commit --no-verify</code> after confirming the only flags are the recorded baseline ones; the commit-msg hook still gates the message itself.</li>
 </ul>
+<h3 id="2026-06-13--symlink-walker-bug-fixed"><a class="header" href="#2026-06-13--symlink-walker-bug-fixed">2026-06-13 — Symlink walker bug fixed</a></h3>
+<ul>
+<li>no-phase-skill issue #8 (the --all walker followed symlinks: duplicate scans, infinite loop on cycles) fixed in PR #9 (squash 07c9d40): entries whose symlink_metadata reports a symlink are skipped; integration tests cover once-only reporting and cycle termination. Host pointer bumped (e8b00bf). The host's --all baseline drops back to ~56 once the installed hook binary is refreshed.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="claudemd"><a class="header" href="#claudemd">CLAUDE.md</a></h1>
 <p>Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.</p>
 <p>Tradeoff: These guidelines bias toward caution over speed. For trivial tasks, use judgment.</p>
