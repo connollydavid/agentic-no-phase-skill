@@ -1625,13 +1625,14 @@ the pin recorded in host config rather than as a gitlink:</p>
 tree). <code>&lt;name&gt;/</code> is the <strong>canonical worktree</strong> — the audited state, where CI and
 the verification lanes run. Parallel lines are sibling worktrees <code>&lt;name&gt;.&lt;line&gt;/</code>,
 one per agent or release branch; worktrees are never nested inside another
-worktree (it breaks <code>.git</code> resolution).</li>
+worktree (it breaks <code>.git</code> resolution). A host may embed <strong>several</strong> software
+components; each <code>&lt;name&gt;</code> is its own bare store plus worktrees.</li>
 <li><strong>Recipe, not trees.</strong> The bare store and all worktrees are local artifacts
-(gitignored). The host commits a recipe (<code>.host-software</code>) — <code>url</code>, the <strong>pinned
-canonical SHA</strong>, and the worktree set — that a setup step materializes:
-<code>clone --bare</code> → set the <code>+refs/heads/*:refs/remotes/origin/*</code> fetch refspec →
-<code>fetch</code> → <code>worktree add &lt;name&gt;</code> at the pinned SHA → init nested submodules per
-worktree → add the parallel worktrees.</li>
+(gitignored). The host commits a recipe (<code>.host-software</code>) — <strong>one <code>[software "&lt;name&gt;"]</code> stanza per component</strong>, mirroring <code>.gitmodules</code>, each recording <code>url</code>,
+the <strong>pinned canonical SHA</strong>, and the worktree set — that a setup step
+materializes: <code>clone --bare</code> → set the <code>+refs/heads/*:refs/remotes/origin/*</code> fetch
+refspec → <code>fetch</code> → <code>worktree add &lt;name&gt;</code> at the pinned SHA → init nested
+submodules per worktree → add the parallel worktrees.</li>
 <li><strong>Audit moves to our tooling.</strong> With no gitlink, <code>host-lifecycle</code> owns the "is
 <code>&lt;name&gt;/</code> at its recorded SHA?" check; the recipe's pinned SHA is the
 reproducibility anchor the gitlink used to be.</li>
