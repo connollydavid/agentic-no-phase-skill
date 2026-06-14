@@ -303,6 +303,12 @@ Cut v0.1.0 tag; release publishes all six matrix binaries (needed <code>permissi
 <h3 id="notes-3"><a class="header" href="#notes-3">Notes</a></h3>
 <p>Local cargo cannot build the project (2015 pre-nightly); all verification goes through CI. Depends on CI Pipeline being green (it is, since run 27242782567).</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="template-rewrite--rewrite-template-agentic-host-into-the-canonical-agentic-host"><a class="header" href="#template-rewrite--rewrite-template-agentic-host-into-the-canonical-agentic-host">TEMPLATE-REWRITE — rewrite template-agentic-host into the canonical agentic host</a></h1>
+<blockquote>
+<p><strong>Status: done (2026-06-14).</strong> Executed as template <code>0e5dd7f</code> → <code>59315bb</code>
+(rewrite <code>668b521</code> + host-lint pointer bump <code>59315bb</code>), host pointer bump
+<code>cddf673</code>. All steps below landed; all follow-up tidy-ups completed (see the
+closing note at the bottom).</p>
+</blockquote>
 <p>Plan for the parked "template content rewrite" work. The template scaffold exists
 (<code>tools/</code> submodules, <code>.claude/skills</code>, <code>cast</code>/<code>plan</code>/<code>call</code> seed, <code>STRUCTURE.md</code>);
 what remains is replacing the <strong>inherited Karpathy-guidelines skin</strong> with our own
@@ -368,15 +374,25 @@ template whose methodology the host itself follows — a self-hosting bootstrap
 (a C compiler compiling a C compiler). Defer the host-sync; reconcile later.
 This pass touches only the template's identity.</li>
 </ul>
-<h2 id="follow-up-tidy-ups-separate-not-blocking-the-rewrite"><a class="header" href="#follow-up-tidy-ups-separate-not-blocking-the-rewrite">Follow-up tidy-ups (separate, not blocking the rewrite)</a></h2>
+<h2 id="follow-up-tidy-ups-separate-not-blocking-the-rewrite--all-done"><a class="header" href="#follow-up-tidy-ups-separate-not-blocking-the-rewrite--all-done">Follow-up tidy-ups (separate, not blocking the rewrite) — all done</a></h2>
 <ul>
-<li>Bump <code>tools/host-lint</code> submodule pointers (template + host) <code>a9a7cd3</code> → <code>c0b19f4</code>
-to pick up the host-grammar refactor.</li>
-<li>Refresh the host's <strong>installed</strong> git hooks — they still call the <code>no-phase</code>
-binary (per-clone, local); point them at <code>host-lint</code>.</li>
-<li>Update or close host issue #1 — its phase-naming topic is superseded by the
-cast/spec/plan/call + three-lane design.</li>
+<li><strong>Done.</strong> Bumped <code>tools/host-lint</code> pointers (template + host) <code>a9a7cd3</code> →
+<code>c0b19f4</code>. Verified <code>c0b19f4</code> is remote <code>main</code> head and the child of <code>a9a7cd3</code>,
+so the bump is forward (the <code>git describe</code> <code>v0.1.2-2-ga9a7cd3</code> had made the
+direction look ambiguous).</li>
+<li><strong>Done.</strong> Refreshed the host's installed git hooks: renamed the binary
+<code>.git/hooks/no-phase</code> → <code>host-lint</code> and reinstalled the canonical <code>pre-commit</code>
+script (which references <code>$SCRIPT_DIR/host-lint</code>) as both <code>pre-commit</code> and
+<code>commit-msg</code>. Verified: blocks a tell, passes a clean message, passes a
+Co-Authored-By trailer. (Local, per-clone — not committed.)</li>
+<li><strong>Done.</strong> Closed host issue #1 with a resolution comment — superseded by the
+cast/spec/plan/call + three-lane design; the "don't pad" departure it proposed
+was settled the other way (we zero-pad via host-grammar).</li>
 </ul>
+<h2 id="d2-deferred--host--template-sole-source"><a class="header" href="#d2-deferred--host--template-sole-source">D2 (deferred) — host ↔ template sole-source</a></h2>
+<p>Still deferred per the decision above: the host's own <code>CLAUDE.md</code> and the
+template's <code>CLAUDE.md</code> now state the methodology twice. Reconcile later (the
+self-hosting bootstrap). This pass touched only the template's identity.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="memorymd"><a class="header" href="#memorymd">MEMORY.md</a></h1>
 <h2 id="session-log"><a class="header" href="#session-log">Session Log</a></h2>
 <h3 id="2025-01-xx--initial-setup"><a class="header" href="#2025-01-xx--initial-setup">2025-01-XX — Initial Setup</a></h3>
