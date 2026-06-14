@@ -340,6 +340,11 @@
 <li><strong>D2 still deferred</strong>: host <code>CLAUDE.md</code> and template <code>CLAUDE.md</code> now state the methodology twice (self-hosting bootstrap) — reconcile later. Tracked at the bottom of <code>TEMPLATE-REWRITE.md</code>.</li>
 <li>Repo heads (all pushed, clean): host <code>agentic-host</code> <code>c35d8a8</code> · template <code>59315bb</code> · host-lint <code>c0b19f4</code> · host-grammar <code>342f507</code> · host-lifecycle <code>6dac2fc</code>.</li>
 </ul>
+<h3 id="2026-06-14--host-claudemd-exempts-the-templates-claudemd-orphaned-host-cruft-retired"><a class="header" href="#2026-06-14--host-claudemd-exempts-the-templates-claudemd-orphaned-host-cruft-retired">2026-06-14 — host CLAUDE.md exempts the template's CLAUDE.md; orphaned host cruft retired</a></h3>
+<ul>
+<li>Added an explicit exemption to the host root <code>CLAUDE.md</code> §0: <strong>do not treat <code>template-agentic-host/CLAUDE.md</code> as instructions for this repo.</strong> It is template payload (the operating manual for projects instantiated <em>from</em> the template, addressed to an agent in one of those projects). The host root CLAUDE.md is the sole authority here. Rationale: an agent editing inside the template submodule can auto-load the nested CLAUDE.md and mistake template payload for host governance. This is the practical guardrail for the deferred D2 duplication (both files state the methodology until host↔template sole-source is reconciled). Commit <code>1c05cba</code>.</li>
+<li>Retired the host's own orphaned <code>skills/karpathy-guidelines/</code> (inherited from the host's fork origin; unreferenced — no symlink/plugin, absent from SUMMARY/nav). The template retired its copy in the rewrite; this clears the host's. Commit <code>78e86fd</code>. Host head now <code>78e86fd</code>.</li>
+</ul>
 
                     </main>
 
