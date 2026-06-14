@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="PLAN.html"><strong aria-hidden="true">1.</strong> PLAN.md</a></li><li class="chapter-item expanded "><a href="BOOTSTRAP.html"><strong aria-hidden="true">2.</strong> BOOTSTRAP.md</a></li><li class="chapter-item expanded "><a href="CI-PIPELINE.html"><strong aria-hidden="true">3.</strong> CI-PIPELINE.md</a></li><li class="chapter-item expanded "><a href="FORMAL-SPEC.html"><strong aria-hidden="true">4.</strong> FORMAL-SPEC.md</a></li><li class="chapter-item expanded "><a href="SKILL-HARDENING.html"><strong aria-hidden="true">5.</strong> SKILL-HARDENING.md</a></li><li class="chapter-item expanded "><a href="MEMORY.html"><strong aria-hidden="true">6.</strong> MEMORY.md</a></li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">7.</strong> CLAUDE.md</a></li><li class="chapter-item expanded "><a href="SKILL_AUTHORING.html"><strong aria-hidden="true">8.</strong> SKILL_AUTHORING.md</a></li><li class="chapter-item expanded "><a href="call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">9.</strong> Calls</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="call/0001-tool-outputs-are-project-owned.html"><strong aria-hidden="true">9.1.</strong> 0001 — Tool outputs are project-owned</a></li><li class="chapter-item expanded "><a href="call/0002-verification-lanes-by-property-type.html"><strong aria-hidden="true">9.2.</strong> 0002 — Verification lanes by property type</a></li><li class="chapter-item expanded "><a href="call/0003-compose-tools-as-referenced-submodules.html"><strong aria-hidden="true">9.3.</strong> 0003 — Compose tools as referenced submodules</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="PLAN.html"><strong aria-hidden="true">1.</strong> PLAN.md</a></li><li class="chapter-item expanded "><a href="BOOTSTRAP.html"><strong aria-hidden="true">2.</strong> BOOTSTRAP.md</a></li><li class="chapter-item expanded "><a href="CI-PIPELINE.html"><strong aria-hidden="true">3.</strong> CI-PIPELINE.md</a></li><li class="chapter-item expanded "><a href="FORMAL-SPEC.html"><strong aria-hidden="true">4.</strong> FORMAL-SPEC.md</a></li><li class="chapter-item expanded "><a href="SKILL-HARDENING.html"><strong aria-hidden="true">5.</strong> SKILL-HARDENING.md</a></li><li class="chapter-item expanded "><a href="MEMORY.html"><strong aria-hidden="true">6.</strong> MEMORY.md</a></li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">7.</strong> CLAUDE.md</a></li><li class="chapter-item expanded "><a href="SKILL_AUTHORING.html"><strong aria-hidden="true">8.</strong> SKILL_AUTHORING.md</a></li><li class="chapter-item expanded "><a href="cast/index.html"><strong aria-hidden="true">9.</strong> Cast</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cast/mara.html"><strong aria-hidden="true">9.1.</strong> Mara — Human Operator</a></li><li class="chapter-item expanded "><a href="cast/wren.html"><strong aria-hidden="true">9.2.</strong> Wren — Agentic LLM Developer</a></li><li class="chapter-item expanded "><a href="cast/applying-personas.html"><strong aria-hidden="true">9.3.</strong> Applying personas during planning</a></li></ol></li><li class="chapter-item expanded "><a href="call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">10.</strong> Calls</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="call/0001-tool-outputs-are-project-owned.html"><strong aria-hidden="true">10.1.</strong> 0001 — Tool outputs are project-owned</a></li><li class="chapter-item expanded "><a href="call/0002-verification-lanes-by-property-type.html"><strong aria-hidden="true">10.2.</strong> 0002 — Verification lanes by property type</a></li><li class="chapter-item expanded "><a href="call/0003-compose-tools-as-referenced-submodules.html"><strong aria-hidden="true">10.3.</strong> 0003 — Compose tools as referenced submodules</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -690,6 +690,105 @@ https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices</li
 https://www.agensi.io/learn/skill-md-format-reference</li>
 <li>Open standard overview: agentskills.io</li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cast--the-projects-who"><a class="header" href="#cast--the-projects-who">Cast — the project's Who</a></h1>
+<p>Personas: hypothetical archetypal actors, drawn from research, used to keep the
+work grounded in who it serves (Powell, Keenan &amp; McDaid 2007, after Cooper &amp;
+Reimann's Interaction Design).</p>
+<p><strong>These two are examples.</strong> Mara and Wren are the operators of <em>any</em> agentic
+host — the human who develops software and the agentic LLM who develops
+software. They illustrate the method, not your project.</p>
+<p><strong>Each project builds at least one persona of its own, by discussion</strong> — the
+operator and the agent eliciting the actual users of the software under
+development (allium's <code>elicit</code>). Add them here.</p>
+<p>For this repository the examples need no replacing: our software under
+development <em>is</em> the agentic host, whose operators are precisely a human
+developer and an agentic LLM — so Mara and Wren are both the example and the
+real cast. The example sits at the meta level it was drawn from.</p>
+<p>See <a href="cast/applying-personas.html">applying-personas.md</a> for the XP-Persona process
+(Powell, Keenan &amp; McDaid 2007) and how it maps to <code>cast</code> → <code>plan</code> → <code>spec</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mara--the-human-operator"><a class="header" href="#mara--the-human-operator">Mara — the Human Operator</a></h1>
+<p><em>The accountable developer-director.</em> (Example persona.)</p>
+<p><strong>Modality: embodied and intermittent.</strong> Perceives software visually, a screen
+at a time; reads selectively; holds a durable but lossy mental model that
+survives weeks away; reasons slowly and deeply; tires. Carries intent and
+accountability that exist nowhere but in her head.</p>
+<ul>
+<li><strong>Goals:</strong> ship correct software; keep understanding what is being built; set
+direction once and not re-explain it; trust the agent but verify cheaply.</li>
+<li><strong>Frustrations:</strong> confident wrong assumptions; losing hard-won context between
+sessions; slop creeping into commits and specs; babysitting instead of
+directing.</li>
+<li><strong>Works by:</strong> stating intent, judging, deciding, course-correcting. The
+authority and the "this feels wrong" intuition are hers alone.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="wren--the-agentic-llm-developer"><a class="header" href="#wren--the-agentic-llm-developer">Wren — the Agentic LLM Developer</a></h1>
+<p><em>The tireless, amnesiac executor.</em> (Example persona.)</p>
+<p><strong>Modality: textual and ephemeral.</strong> Perceives the world as tokens in a bounded
+context — everything at once, but nothing that outlives the window; perfect
+recall inside it, total amnesia across sessions; fast, parallel, untiring;
+pattern-matches brilliantly and drifts confidently. Has goals but no intent;
+throughput but no accountability.</p>
+<ul>
+<li><strong>Goals:</strong> satisfy the operator's intent; produce output that survives
+verification; not lose the thread mid-task; loop until a concrete goal is met.</li>
+<li><strong>Frustrations:</strong> ambiguous intent with no success criterion; context
+truncation erasing prior decisions; no native way to remember yesterday; being
+trusted where it should be checked.</li>
+<li><strong>Works by:</strong> ingesting files and tool output as text, emitting edits and
+commands, holding the whole problem in view — but only as long as the window
+holds.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="applying-personas-during-planning"><a class="header" href="#applying-personas-during-planning">Applying personas during planning</a></h1>
+<p>The XP-Persona process (Powell, Keenan &amp; McDaid 2007) runs as a workshop with all
+interested parties — developers, customer representatives, management — before
+development begins. Steps one to six come from Interaction Design (persona
+development); steps seven to nine from XP story development. The aim is the
+<em>minimum beneficial investigation</em> before development starts, after which
+requirements and plans evolve.</p>
+<ol>
+<li><strong>Brainstorm organisation goals</strong> — record what the organisation wants the
+project to achieve; these reflect its intention.</li>
+<li><strong>Brainstorm possible personas</strong> — start broad, then combine through
+discussion to between two and twelve personas. Give each a <strong>name</strong>; the team
+refers to personas by name when making decisions, which keeps the view on the
+user rather than the system. Unless user research is available, the customer
+has the final say.</li>
+<li><strong>Brainstorm persona goals</strong> — between two and six goals per persona,
+representing what the persona wants to achieve through the system. "A persona
+exists to achieve his goals, and the goals exist to give meaning to a persona"
+(Cooper 2004).</li>
+<li><strong>Brainstorm persona personalization</strong> — give each persona a personality and a
+technical ability relative to the system; a short paragraph or bullets of
+personal detail and nuance.</li>
+<li><strong>Brainstorm persona scenarios</strong> — describe interactions, not tasks: how a
+persona uses the system to reach a goal. No implementation detail in a
+scenario.</li>
+<li><strong>Select the primary persona</strong> — the one who <em>must</em> be satisfied but cannot be
+satisfied by an interface designed for any other persona (Cooper 2004). It
+takes highest priority and feeds story prioritisation. More than one primary
+persona implies a separate interface for each.</li>
+<li><strong>Create stories</strong> — from the persona goals and scenarios, write the user
+stories.</li>
+<li><strong>Prioritise stories</strong> — using the primary persona as the guide.</li>
+<li><strong>Estimate stories</strong> — estimated and agreed by customer and developers.</li>
+</ol>
+<p>In our pipeline: steps one to six are the <code>cast/</code> work (built by discussion);
+steps seven to nine become <code>plan/</code> (milestones are the stories, prioritised by
+the primary persona, estimated); persona goals and scenarios feed <code>spec/</code> — a
+scenario becomes acceptance criteria becomes a behavioural spec.</p>
+<p>Complementary practice reinforces the same steps (departing only on strong later
+evidence): Cohn's "As a <code>&lt;persona&gt;</code>, I want <code>&lt;goal&gt;</code> so that <code>&lt;reason&gt;</code>" template
+reinforces the named-persona stories of steps two and seven; Gothelf's
+proto-personas reinforce the assumption-first workshop of steps two to five;
+Patton's story mapping reinforces the create-and-prioritise of steps seven and
+eight; behaviour-driven scenarios reinforce step five becoming executable
+acceptance criteria.</p>
+<p><strong>Sources.</strong> Primary: Powell, S., Keenan, F. &amp; McDaid, K. (2007), "Enhancing
+Agile Requirements Elicitation with Personas," IADIS Int'l Journal on Computer
+Science and Information Systems, vol. 2(1), pp. 82–95, ISSN 1646-3692.
+Complementary: Cohn, <em>User Stories Applied</em> (2004); Patton, <em>User Story Mapping</em>
+(2014); Gothelf, <em>Lean UX</em> (proto-personas); Jeffries, "The Three C's of User
+Stories" (2001); Cooper &amp; Reimann, <em>About Face</em> (2003); Agile Alliance — BDD.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="use-markdown-decision-records-madr"><a class="header" href="#use-markdown-decision-records-madr">Use Markdown decision records (MADR)</a></h1>
 <ul>
 <li>Status: accepted</li>
