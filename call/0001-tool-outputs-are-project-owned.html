@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>0003 — Compose tools as referenced submodules - agentic-host</title>
+        <title>0001 — Tool outputs are project-owned - agentic-host</title>
 
 
         <!-- Custom HTML head -->
@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../PLAN.html"><strong aria-hidden="true">1.</strong> PLAN.md</a></li><li class="chapter-item expanded "><a href="../BOOTSTRAP.html"><strong aria-hidden="true">2.</strong> BOOTSTRAP.md</a></li><li class="chapter-item expanded "><a href="../CI-PIPELINE.html"><strong aria-hidden="true">3.</strong> CI-PIPELINE.md</a></li><li class="chapter-item expanded "><a href="../FORMAL-SPEC.html"><strong aria-hidden="true">4.</strong> FORMAL-SPEC.md</a></li><li class="chapter-item expanded "><a href="../SKILL-HARDENING.html"><strong aria-hidden="true">5.</strong> SKILL-HARDENING.md</a></li><li class="chapter-item expanded "><a href="../MEMORY.html"><strong aria-hidden="true">6.</strong> MEMORY.md</a></li><li class="chapter-item expanded "><a href="../CLAUDE.html"><strong aria-hidden="true">7.</strong> CLAUDE.md</a></li><li class="chapter-item expanded "><a href="../SKILL_AUTHORING.html"><strong aria-hidden="true">8.</strong> SKILL_AUTHORING.md</a></li><li class="chapter-item expanded "><a href="../decisions/0000-use-markdown-decision-records.html"><strong aria-hidden="true">9.</strong> Decisions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../decisions/0001-tool-outputs-are-project-owned.html"><strong aria-hidden="true">9.1.</strong> 0001 — Tool outputs are project-owned</a></li><li class="chapter-item expanded "><a href="../decisions/0002-verification-lanes-by-property-type.html"><strong aria-hidden="true">9.2.</strong> 0002 — Verification lanes by property type</a></li><li class="chapter-item expanded "><a href="../decisions/0003-compose-tools-as-referenced-submodules.html" class="active"><strong aria-hidden="true">9.3.</strong> 0003 — Compose tools as referenced submodules</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../PLAN.html"><strong aria-hidden="true">1.</strong> PLAN.md</a></li><li class="chapter-item expanded "><a href="../BOOTSTRAP.html"><strong aria-hidden="true">2.</strong> BOOTSTRAP.md</a></li><li class="chapter-item expanded "><a href="../CI-PIPELINE.html"><strong aria-hidden="true">3.</strong> CI-PIPELINE.md</a></li><li class="chapter-item expanded "><a href="../FORMAL-SPEC.html"><strong aria-hidden="true">4.</strong> FORMAL-SPEC.md</a></li><li class="chapter-item expanded "><a href="../SKILL-HARDENING.html"><strong aria-hidden="true">5.</strong> SKILL-HARDENING.md</a></li><li class="chapter-item expanded "><a href="../MEMORY.html"><strong aria-hidden="true">6.</strong> MEMORY.md</a></li><li class="chapter-item expanded "><a href="../CLAUDE.html"><strong aria-hidden="true">7.</strong> CLAUDE.md</a></li><li class="chapter-item expanded "><a href="../SKILL_AUTHORING.html"><strong aria-hidden="true">8.</strong> SKILL_AUTHORING.md</a></li><li class="chapter-item expanded "><a href="../call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">9.</strong> Calls</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../call/0001-tool-outputs-are-project-owned.html" class="active"><strong aria-hidden="true">9.1.</strong> 0001 — Tool outputs are project-owned</a></li><li class="chapter-item expanded "><a href="../call/0002-verification-lanes-by-property-type.html"><strong aria-hidden="true">9.2.</strong> 0002 — Verification lanes by property type</a></li><li class="chapter-item expanded "><a href="../call/0003-compose-tools-as-referenced-submodules.html"><strong aria-hidden="true">9.3.</strong> 0003 — Compose tools as referenced submodules</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -177,66 +177,73 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="compose-verification-tools-as-referenced-submodules"><a class="header" href="#compose-verification-tools-as-referenced-submodules">Compose verification tools as referenced submodules</a></h1>
+                        <h1 id="tool-outputs-are-project-owned-not-under-allium-or-specula-licenses"><a class="header" href="#tool-outputs-are-project-owned-not-under-allium-or-specula-licenses">Tool outputs are project-owned, not under allium or Specula licenses</a></h1>
 <ul>
 <li>Status: accepted</li>
 <li>Date: 2026-06-14</li>
 </ul>
 <h2 id="context-and-problem-statement"><a class="header" href="#context-and-problem-statement">Context and Problem Statement</a></h2>
-<p>The three lanes (see decision 0002) are owned by tools under three different
-licenses: no-phase (Unlicense, ours), allium (MIT), and Specula (Apache-2.0).
-They must fit our milestone (decision-record) lifecycle and obligations model
-without contaminating our license posture, forcing us to maintain a fork, or
-turning a tool's internal workflow into a competing project axis.</p>
+<p>The agentic-host methodology composes three referenced tools as submodules:
+no-phase (Unlicense, ours), allium (MIT, JUXT Ltd), and Specula (Apache-2.0,
+specula-org). Running them produces artifacts inside our project — allium's
+<code>propagate</code> emits obligations; Specula emits a modeling brief, <code>base.tla</code> /
+<code>MC.tla</code> specs, traces, and bug reports into <code>.specula-output/</code>. We need a
+recorded position on whether those generated artifacts carry the tools'
+licenses, so our project content stays license-clean and we avoid accidental
+contamination.</p>
 <h2 id="considered-options"><a class="header" href="#considered-options">Considered Options</a></h2>
 <ol>
-<li>Vendor each tool's files into our tree and edit them to fit.</li>
-<li>Reference each tool as a submodule and steer it from our own layer.</li>
+<li>Treat generated artifacts as project-owned, outside the tools' license scope.</li>
+<li>Treat them as derivative works of the tools (carrying MIT / Apache-2.0).</li>
+<li>Never generate into our tree (run the tools out-of-tree only).</li>
 </ol>
 <h2 id="decision-outcome"><a class="header" href="#decision-outcome">Decision Outcome</a></h2>
-<p>Chosen option 2: <strong>each tool is a referenced submodule; we orchestrate, never
-edit.</strong></p>
+<p>Chosen option 1: <strong>artifacts the tools generate from our own input are our
+project's work product, outside allium's and Specula's license scope</strong> — the
+same way a compiled binary is not a derivative of the compiler that produced it.</p>
+<h3 id="basis-verified-against-the-source-repos"><a class="header" href="#basis-verified-against-the-source-repos">Basis (verified against the source repos)</a></h3>
 <ul>
-<li><strong>Reference, never vendor.</strong> Each tool is a git submodule; our methodology
-(CLAUDE.md) refers to its skills. We never copy or edit its files — behaviour
-is steered by instruction plus thin wrappers in our own tree. This keeps us
-clean of Apache-2.0 obligations and keeps submodule updates trivial.</li>
-<li><strong>Obligations are tagged by lane and co-located with tests.</strong> An obligation is
-<code>pbt</code> (allium) or <code>tla</code> (Specula); both live in the milestone's <code>obligations/</code>
-area. A tool's generated artifacts (allium's obligations, Specula's modeling
-brief, specs, traces, confirmed bugs) are the discharge evidence, and are
-project-owned per decision 0001.</li>
-<li><strong>A tool's workflow discharges, it does not milestone.</strong> A tool's internal
-pipeline runs inside one milestone to discharge that milestone's obligations;
-it is not a parallel milestone axis. Specula's steps are referred to by name
-(Code Analysis, Spec Generation, and so on), never as ordinal phases — keeping
-our own no-phase convention.</li>
-<li><strong>Lane choice is a decision.</strong> Choosing a lane for a concern, or classifying a
-Specula target category, is itself an architectural decision and gets its own
-record.</li>
-<li><strong>Boilerplate is referenced, not vendored.</strong> Verbatim tool boilerplate (a
-Specula trace-module, an allium template) is pulled in by reference, never
-copied — the carve-out from decision 0001.</li>
+<li>Both licenses govern only "the Work" / "the Software" — the tools' own files —
+not artifacts produced by running them. allium ships standard MIT (© JUXT Ltd)
+with no output clause. Specula ships standard Apache-2.0 whose "Derivative
+Works" definition refers to works based on Specula's code, not specs that model
+our system. Specula's DCO governs inbound contributions only.</li>
+<li>Both tools frame outputs as the user's: allium "generates tests from the
+formal behaviours of your system"; Specula writes outputs to
+<code>.specula-output/</code> under the project root.</li>
+<li>Both authors chose permissive licenses; a verification tool that claimed the
+specs you write about your own system would be self-defeating. So this reading
+is consistent with — not contrary to — the authors' intent.</li>
 </ul>
+<h3 id="carve-out"><a class="header" href="#carve-out">Carve-out</a></h3>
+<p>Verbatim boilerplate a tool injects — a Specula trace-module or harness
+skeleton, an allium obligation template — remains part of that tool's Work and
+keeps its license. We reference such boilerplate (for example <code>EXTENDS</code> or an
+include from the submodule), never vendor it into our tree.</p>
 <h2 id="consequences"><a class="header" href="#consequences">Consequences</a></h2>
 <ul>
-<li>Good: clean license separation by construction; our content stays Unlicense;
-submodule bumps are mechanical.</li>
-<li>Good: one numbered milestone register, undisturbed by the tools' internal
-step naming.</li>
-<li>Risk: correctness depends on the reference-not-vendor and instruct-not-patch
-discipline; patching a submodule is a designed-around failure mode, not a
-routine tool.</li>
+<li>Good: generated specs and bug reports under a milestone's <code>spec/</code> are
+project-owned and Unlicense-clean — no attribution obligation downstream.</li>
+<li>Good: the tools stay in their submodules under their own licenses; the
+separation is clean by construction.</li>
+<li>Risk: the cleanliness depends on referencing tool boilerplate rather than
+copying it; a generated artifact that embeds tool source verbatim carries that
+fragment's license.</li>
+<li>Note: this is practical reasoning, not legal advice; revisit before any
+commercially load-bearing use.</li>
 </ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../decisions/0002-verification-lanes-by-property-type.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../call/0000-use-markdown-decision-records.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next prefetch" href="../call/0002-verification-lanes-by-property-type.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -244,10 +251,13 @@ routine tool.</li>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../decisions/0002-verification-lanes-by-property-type.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../call/0000-use-markdown-decision-records.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next prefetch" href="../call/0002-verification-lanes-by-property-type.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>

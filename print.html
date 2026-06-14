@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="PLAN.html"><strong aria-hidden="true">1.</strong> PLAN.md</a></li><li class="chapter-item expanded "><a href="BOOTSTRAP.html"><strong aria-hidden="true">2.</strong> BOOTSTRAP.md</a></li><li class="chapter-item expanded "><a href="CI-PIPELINE.html"><strong aria-hidden="true">3.</strong> CI-PIPELINE.md</a></li><li class="chapter-item expanded "><a href="FORMAL-SPEC.html"><strong aria-hidden="true">4.</strong> FORMAL-SPEC.md</a></li><li class="chapter-item expanded "><a href="SKILL-HARDENING.html"><strong aria-hidden="true">5.</strong> SKILL-HARDENING.md</a></li><li class="chapter-item expanded "><a href="MEMORY.html"><strong aria-hidden="true">6.</strong> MEMORY.md</a></li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">7.</strong> CLAUDE.md</a></li><li class="chapter-item expanded "><a href="SKILL_AUTHORING.html"><strong aria-hidden="true">8.</strong> SKILL_AUTHORING.md</a></li><li class="chapter-item expanded "><a href="decisions/0000-use-markdown-decision-records.html"><strong aria-hidden="true">9.</strong> Decisions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="decisions/0001-tool-outputs-are-project-owned.html"><strong aria-hidden="true">9.1.</strong> 0001 — Tool outputs are project-owned</a></li><li class="chapter-item expanded "><a href="decisions/0002-verification-lanes-by-property-type.html"><strong aria-hidden="true">9.2.</strong> 0002 — Verification lanes by property type</a></li><li class="chapter-item expanded "><a href="decisions/0003-compose-tools-as-referenced-submodules.html"><strong aria-hidden="true">9.3.</strong> 0003 — Compose tools as referenced submodules</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="PLAN.html"><strong aria-hidden="true">1.</strong> PLAN.md</a></li><li class="chapter-item expanded "><a href="BOOTSTRAP.html"><strong aria-hidden="true">2.</strong> BOOTSTRAP.md</a></li><li class="chapter-item expanded "><a href="CI-PIPELINE.html"><strong aria-hidden="true">3.</strong> CI-PIPELINE.md</a></li><li class="chapter-item expanded "><a href="FORMAL-SPEC.html"><strong aria-hidden="true">4.</strong> FORMAL-SPEC.md</a></li><li class="chapter-item expanded "><a href="SKILL-HARDENING.html"><strong aria-hidden="true">5.</strong> SKILL-HARDENING.md</a></li><li class="chapter-item expanded "><a href="MEMORY.html"><strong aria-hidden="true">6.</strong> MEMORY.md</a></li><li class="chapter-item expanded "><a href="CLAUDE.html"><strong aria-hidden="true">7.</strong> CLAUDE.md</a></li><li class="chapter-item expanded "><a href="SKILL_AUTHORING.html"><strong aria-hidden="true">8.</strong> SKILL_AUTHORING.md</a></li><li class="chapter-item expanded "><a href="call/0000-use-markdown-decision-records.html"><strong aria-hidden="true">9.</strong> Calls</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="call/0001-tool-outputs-are-project-owned.html"><strong aria-hidden="true">9.1.</strong> 0001 — Tool outputs are project-owned</a></li><li class="chapter-item expanded "><a href="call/0002-verification-lanes-by-property-type.html"><strong aria-hidden="true">9.2.</strong> 0002 — Verification lanes by property type</a></li><li class="chapter-item expanded "><a href="call/0003-compose-tools-as-referenced-submodules.html"><strong aria-hidden="true">9.3.</strong> 0003 — Compose tools as referenced submodules</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -711,7 +711,7 @@ authority.</li>
 <li>Numbers are assigned at merge, so two branches do not collide on the same
 <code>NNNN</code>.</li>
 <li>Disambiguation by home: a bare number at the plan root names a milestone; a
-numbered file under <code>decisions/</code> names a decision.</li>
+numbered file under <code>call/</code> names a decision.</li>
 </ul>
 <h2 id="consequences"><a class="header" href="#consequences">Consequences</a></h2>
 <ul>
@@ -765,9 +765,8 @@ keeps its license. We reference such boilerplate (for example <code>EXTENDS</cod
 include from the submodule), never vendor it into our tree.</p>
 <h2 id="consequences-1"><a class="header" href="#consequences-1">Consequences</a></h2>
 <ul>
-<li>Good: generated obligations, specs, and bug reports under a milestone's
-<code>obligations/</code> are project-owned and Unlicense-clean — no attribution
-obligation downstream.</li>
+<li>Good: generated specs and bug reports under a milestone's <code>spec/</code> are
+project-owned and Unlicense-clean — no attribution obligation downstream.</li>
 <li>Good: the tools stay in their submodules under their own licenses; the
 separation is clean by construction.</li>
 <li>Risk: the cleanliness depends on referencing tool boilerplate rather than
@@ -839,11 +838,11 @@ edit.</strong></p>
 (CLAUDE.md) refers to its skills. We never copy or edit its files — behaviour
 is steered by instruction plus thin wrappers in our own tree. This keeps us
 clean of Apache-2.0 obligations and keeps submodule updates trivial.</li>
-<li><strong>Obligations are tagged by lane and co-located with tests.</strong> An obligation is
-<code>pbt</code> (allium) or <code>tla</code> (Specula); both live in the milestone's <code>obligations/</code>
-area. A tool's generated artifacts (allium's obligations, Specula's modeling
-brief, specs, traces, confirmed bugs) are the discharge evidence, and are
-project-owned per decision 0001.</li>
+<li><strong>Specs are tagged by lane and co-located with tests.</strong> A spec is <code>.allium</code>
+(allium) or <code>.tla</code> (Specula); both live in the milestone's <code>spec/</code> area. A
+tool's generated artifacts (allium's behavioural spec and generated tests,
+Specula's modeling brief, TLA+ specs, traces, confirmed bugs) are the discharge
+evidence, and are project-owned per decision 0001.</li>
 <li><strong>A tool's workflow discharges, it does not milestone.</strong> A tool's internal
 pipeline runs inside one milestone to discharge that milestone's obligations;
 it is not a parallel milestone axis. Specula's steps are referred to by name
